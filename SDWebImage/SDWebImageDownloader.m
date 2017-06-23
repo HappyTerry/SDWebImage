@@ -144,6 +144,12 @@
                                                   progress:(nullable SDWebImageDownloaderProgressBlock)progressBlock
                                                  completed:(nullable SDWebImageDownloaderCompletedBlock)completedBlock {
     __weak SDWebImageDownloader *wself = self;
+    
+    // TeamUp custom config
+    if ([self valueForHTTPHeaderField:url.absoluteString] != nil) {
+        NSString * value = [self valueForHTTPHeaderField:url.absoluteString];
+        [self setValue:value forHTTPHeaderField:@"AccessToken"];
+    }
 
     return [self addProgressCallback:progressBlock completedBlock:completedBlock forURL:url createCallback:^SDWebImageDownloaderOperation *{
         __strong __typeof (wself) sself = wself;
